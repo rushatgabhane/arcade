@@ -10,5 +10,5 @@ const CONST = {
         darkBlue: '#0b1b34',
         ice: '#75f4f9',
     },
-    
-}
+
+};

@@ -1,15 +1,10 @@
-import css from '../index.css';
 import CONST from './CONST';
-import Boundary from './Boundary';
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
 class Boundary {
-    constructor({position}) {
+    constructor({ position }) {
         this.position = position;
         this.width = 40;
         this.height = 40;
@@ -20,3 +15,5 @@ class Boundary {
         context.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
+
+export default Boundary;

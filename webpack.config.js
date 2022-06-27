@@ -12,31 +12,30 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-                type: "asset",
+                type: 'asset',
             },
             {
                 test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader",
+                    loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
+                        presets: ['@babel/preset-env'],
+                    },
+                },
             },
-        ],  
+        ],
     },
     plugins: [
         new webpack.ProgressPlugin(),
-        new HtmlWebpackPlugin({ 
-            template: './src/index.html' 
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
         }),
     ],
     // watch: true,
     mode: 'production',
 };
- 
