@@ -4,13 +4,13 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
 class Boundary {
-    static width = 40;
-    static height = 40;
+    static width = 50;
+    static height = 50;
 
     constructor({ position }) {
         this.position = position;
-        this.width = 40;
-        this.height = 40;
+        this.width = 50;
+        this.height = 50;
     }
 
     draw() {

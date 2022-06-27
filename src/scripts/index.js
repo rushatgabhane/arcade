@@ -2,6 +2,7 @@ import css from '../index.css';
 import CONST from './CONST';
 import Boundary from './Boundary';
 import Pacman from './Pacman';
+import {boundaries} from './layout';
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -29,9 +30,30 @@ const pacman = new Pacman({
     },
 });
 
+function isColliding(pacman, boundary) {
+    if (pacman.position.y - pacman.radius + pacman.velocity.y <= boundary.position.y + boundary.height
+        && pacman.position.x + pacman.radius + pacman.velocity.x >= boundary.position.x
+        && pacman.position.y + pacman.radius + pacman.velocity.y >= boundary.position.y
+        && pacman.position.x - pacman.radius + pacman.velocity.x <= boundary.position.x + boundary.height
+    ) {
+        return true;
+    }
+    return false;
+}
+
 function animate() {
     requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    boundaries.forEach(boundary => {
+        boundary.draw();
+
+        if (isColliding(pacman, boundary)) {
+            pacman.velocity.x = 0;
+            pacman.velocity.y = 0;
+        }
+    })
+
     pacman.update();
 
     pacman.velocity.x = 0;

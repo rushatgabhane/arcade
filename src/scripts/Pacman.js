@@ -28,10 +28,6 @@ class Pacman {
     update() {
         this.draw();
         this.position.x += this.velocity.x;
-        if (this.velocity.y != 0) {
-            console.log(this.velocity);
-            console.log(this.position.y);
-        }
         this.position.y += this.velocity.y;
     }
 }
