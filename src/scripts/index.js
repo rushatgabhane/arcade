@@ -26,12 +26,12 @@ const pacman = new Pacman({
     velocity: {
         x: 0,
         y: 0,
-    }
+    },
 });
 
 function animate() {
     requestAnimationFrame(animate);
-    context.clearRect(0, 0, canvas.width, canvas.height)
+    context.clearRect(0, 0, canvas.width, canvas.height);
     pacman.update();
 
     pacman.velocity.x = 0;
@@ -56,34 +56,27 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'w' || e.key === 'ArrowUp') {
         direction.up = true;
         lastDirection = 'up';
-    }
-    else if (e.key === 'a' || e.key === 'ArrowLeft') {
-        direction.left = true;   
+    } else if (e.key === 'a' || e.key === 'ArrowLeft') {
+        direction.left = true;
         lastDirection = 'left';
-    }
-    else if (e.key === 's' || e.key === 'ArrowDown') {
-        direction.down = true;  
-        lastDirection = 'down'; 
-    }
-    else if (e.key === 'd' || e.key === 'ArrowRight') {
-        direction.right = true; 
-        lastDirection = 'right';  
+    } else if (e.key === 's' || e.key === 'ArrowDown') {
+        direction.down = true;
+        lastDirection = 'down';
+    } else if (e.key === 'd' || e.key === 'ArrowRight') {
+        direction.right = true;
+        lastDirection = 'right';
     }
 });
-
 
 window.addEventListener('keyup', (e) => {
     e.preventDefault();
     if (e.key === 'w' || e.key === 'ArrowUp') {
-        direction.up = false;   
-    }
-    else if (e.key === 'a' || e.key === 'ArrowLeft') {
-        direction.left = false;   
-    }
-    else if (e.key === 's' || e.key === 'ArrowDown') {
-        direction.down = false;   
-    }
-    else if (e.key === 'd' || e.key === 'ArrowRight') {
-        direction.right = false;   
+        direction.up = false;
+    } else if (e.key === 'a' || e.key === 'ArrowLeft') {
+        direction.left = false;
+    } else if (e.key === 's' || e.key === 'ArrowDown') {
+        direction.down = false;
+    } else if (e.key === 'd' || e.key === 'ArrowRight') {
+        direction.right = false;
     }
 });

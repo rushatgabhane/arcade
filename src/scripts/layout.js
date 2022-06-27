@@ -219,4 +219,4 @@ map.forEach((row, i) => {
 export {
     layout,
     pellets,
-}
+};
