@@ -16,8 +16,6 @@ const direction = {
     right: false,
 };
 
-const directions = ['up', 'left', 'down', 'right'];
-
 let lastDirection;
 
 const pacman = new Pacman({
@@ -38,16 +36,16 @@ function animate() {
 
     pacman.velocity.x = 0;
     pacman.velocity.y = 0;
-    if (direction.up) {
+    if (direction.up && lastDirection === 'up') {
         pacman.velocity.y = -5;
     }
-    else if (direction.left) {
+    if (direction.left && lastDirection === 'left') {
         pacman.velocity.x = -5;
     }
-    else if (direction.down) {
+    if (direction.down && lastDirection === 'down') {
         pacman.velocity.y = 5;
     }
-    else if (direction.right) {
+    if (direction.right && lastDirection === 'right') {
         pacman.velocity.x = 5;
     }
 }
