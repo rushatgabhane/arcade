@@ -11,13 +11,23 @@ module.exports = {
     module: {
         rules: [
             {
-              test: /\.css$/i,
-              use: ["style-loader", "css-loader"],
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
                 type: "asset",
-              },
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
         ],  
     },
     plugins: [
@@ -26,7 +36,7 @@ module.exports = {
             template: './src/index.html' 
         }),
     ],
-    watch: true,
+    // watch: true,
     mode: 'production',
 };
  
