@@ -4,6 +4,9 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
 class Boundary {
+    static width = 40;
+    static height = 40;
+
     constructor({ position }) {
         this.position = position;
         this.width = 40;

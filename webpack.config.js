@@ -36,6 +36,6 @@ module.exports = {
             template: './src/index.html',
         }),
     ],
-    // watch: true,
+    watch: true,
     mode: 'production',
 };
