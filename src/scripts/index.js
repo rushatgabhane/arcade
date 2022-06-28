@@ -45,6 +45,76 @@ function animate() {
     requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
+    if (direction.up && lastDirection === 'up') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const pacmanWithPredictedVelocity = {
+                ...pacman,
+                velocity : {
+                    x: 0,
+                    y: -5,
+                }
+            };
+            if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
+                pacman.velocity.y = 0;
+                break;
+            } else {
+                pacman.velocity.y = -5;
+            }
+        }
+    }
+    if (direction.left && lastDirection === 'left') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const pacmanWithPredictedVelocity = {
+                ...pacman,
+                velocity : {
+                    x: -5,
+                    y: 0,
+                }
+            };
+            if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
+                pacman.velocity.x = 0;
+                break;
+            } else {
+                pacman.velocity.x = -5;
+            }
+        }
+    }
+    if (direction.down && lastDirection === 'down') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const pacmanWithPredictedVelocity = {
+                ...pacman,
+                velocity : {
+                    x: 0,
+                    y: 5,
+                }
+            };
+            if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
+                pacman.velocity.y = 0;
+                break;
+            } else {
+                pacman.velocity.y = 5;
+            }
+        }
+    }
+    if (direction.right && lastDirection === 'right') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const pacmanWithPredictedVelocity = {
+                ...pacman,
+                velocity : {
+                    x: 5,
+                    y: 0,
+                }
+            };
+            if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
+                pacman.velocity.x = 0;
+                break;
+            } else {
+                pacman.velocity.x = 5;
+            }
+        }
+    }
+
+
     boundaries.forEach(boundary => {
         boundary.draw();
 
@@ -56,20 +126,9 @@ function animate() {
 
     pacman.update();
 
-    pacman.velocity.x = 0;
-    pacman.velocity.y = 0;
-    if (direction.up && lastDirection === 'up') {
-        pacman.velocity.y = -5;
-    }
-    if (direction.left && lastDirection === 'left') {
-        pacman.velocity.x = -5;
-    }
-    if (direction.down && lastDirection === 'down') {
-        pacman.velocity.y = 5;
-    }
-    if (direction.right && lastDirection === 'right') {
-        pacman.velocity.x = 5;
-    }
+    // pacman.velocity.x = 0;
+    // pacman.velocity.y = 0;
+    
 }
 animate();
 

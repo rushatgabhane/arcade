@@ -18,7 +18,7 @@ class Pacman {
         context.fill();
 
         context.font = 'bold 24px Helvetica';
-        context.fillStyle = 'white';
+        context.fillStyle = 'black';
         context.textAlign = 'center';
         context.fillText('E', this.position.x, this.position.y + 24 / 3);
 

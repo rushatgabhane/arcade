@@ -15,8 +15,11 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-                type: 'asset',
+                test: /\.(jpe?g|png|gif|svg)$/i, 
+                loader: 'file-loader',
+                options: {
+                  name: '/public/images/[name].[ext]'
+                }
             },
             {
                 test: /\.m?js$/,
@@ -36,6 +39,6 @@ module.exports = {
             template: './src/index.html',
         }),
     ],
-    watch: true,
+    // watch: true,
     mode: 'production',
 };

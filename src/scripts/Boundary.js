@@ -7,15 +7,17 @@ class Boundary {
     static width = 50;
     static height = 50;
 
-    constructor({ position }) {
+    constructor({ position, image }) {
         this.position = position;
+        this.image = image;
         this.width = 50;
         this.height = 50;
     }
 
     draw() {
-        context.fillStyle = CONST.colors.darkBlue;
-        context.fillRect(this.position.x, this.position.y, this.width, this.height);
+        // context.fillStyle = CONST.colors.darkBlue;
+        // context.fillRect(this.position.x, this.position.y, this.width, this.height);
+        context.drawImage(this.image, this.position.x, this.position.y);
     }
 }
 
