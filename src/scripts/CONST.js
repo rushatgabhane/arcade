@@ -10,7 +10,7 @@ const CONST = {
         darkBlue: '#0b1b34',
         ice: '#75f4f9',
     },
-
+    powerUpTime: 5000,
 };
 
 export default CONST;

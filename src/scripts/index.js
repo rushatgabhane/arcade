@@ -14,6 +14,7 @@ importAll(require.context('../../images/', false, /\.(png|jpe?g|svg)$/));
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
+const endMessageElement = document.getElementById('endMessage');
 
 canvas.width = 600;
 canvas.height = 700;
@@ -99,17 +100,6 @@ function isColliding(circle, boundary) {
     return false;
 }
 
-function isGhostColliding(ghost, boundary) {
-    if (ghost.position.y + ghost.velocity.y <= boundary.position.y + boundary.height
-        && ghost.position.x + ghost.size + ghost.velocity.x >= boundary.position.x
-        && ghost.position.y + ghost.size + ghost.velocity.y >= boundary.position.y
-        && ghost.position.x + ghost.velocity.x <= boundary.position.x + boundary.height
-    ) {
-        return true;
-    }
-    return false;
-}
-
 let animateID;
 
 function animate() {
@@ -186,7 +176,7 @@ function animate() {
     }
 
     if (pellets.length === 0) {
-        endGame('Win');
+        endGame('You WIN!!!');
     }
 
     for (let i = pellets.length - 1; i >= 0; i--) {
@@ -211,7 +201,7 @@ function animate() {
             isPowerUpActive = true;
             setTimeout(() => {
                 isPowerUpActive = false;
-            }, 5000);
+            }, CONST.powerUpTime);
         }
     });
 
@@ -228,6 +218,13 @@ function animate() {
 
     ghosts.forEach((ghost, i) => {
         ghost.update();
+        if (isPowerUpActive) {
+            ghost.isScared = true;
+            setTimeout(() => {
+                ghost.isScared = false;
+                console.log('ghost no scrae')
+            }, CONST.powerUpTime);
+        }
 
         if (Math.hypot(ghost.position.x - pacman.position.x, ghost.position.y - pacman.position.y)
             < ghost.radius + pacman.radius
@@ -237,7 +234,7 @@ function animate() {
                 score += 100;
                 scoreElement.innerHTML = score;
             } else {
-                cancelAnimationFrame(animateID);
+                endGame('Game over!');
             }
         }
 
@@ -360,3 +357,8 @@ window.addEventListener('keyup', (e) => {
         direction.right = false;
     }
 });
+
+function endGame(message) {
+    cancelAnimationFrame(animateID);
+    endMessageElement.innerHTML = message;
+}

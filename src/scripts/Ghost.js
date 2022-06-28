@@ -13,10 +13,14 @@ class Ghost {
         this.size = 40;
         this.image = new Image();
         this.image.src = `./images/bill-${color}.png`;
+
+        this.originalSource = `./images/bill-${color}.png`;
         this.previousCollisions = [];
+        this.isScared = false;
     }
 
     draw() {
+        this.image.src = this.isScared ? `./images/bill-blue.png` : this.originalSource;
         context.drawImage(this.image, this.position.x - 20, this.position.y - 20, this.size, this.size);
     }
 
