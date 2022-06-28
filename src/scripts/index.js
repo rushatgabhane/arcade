@@ -32,10 +32,32 @@ const ghosts = [
             y: Boundary.height + Boundary.height / 2,
         },
         velocity: {
-            x: 0,
+            x: Ghost.speed,
             y: 0,
         },
         color: 'pink',
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width + 5 * Boundary.width / 2,
+            y: 5 * Boundary.height + Boundary.height / 2,
+        },
+        velocity: {
+            x: Ghost.speed,
+            y: 0,
+        },
+        color: 'green',
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width + 5 * Boundary.width / 2,
+            y: 11 * Boundary.height + Boundary.height / 2,
+        },
+        velocity: {
+            x: Ghost.speed,
+            y: 0,
+        },
+        color: 'tangerine',
     }),
 ];
 
@@ -54,10 +76,11 @@ const pacman = new Pacman({
 });
 
 function isColliding(circle, boundary) {
-    if (circle.position.y - circle.radius + circle.velocity.y <= boundary.position.y + boundary.height
-        && circle.position.x + circle.radius + circle.velocity.x >= boundary.position.x
-        && circle.position.y + circle.radius + circle.velocity.y >= boundary.position.y
-        && circle.position.x - circle.radius + circle.velocity.x <= boundary.position.x + boundary.height
+    const padding = Boundary.width / 2 - circle.radius - 1;
+    if (circle.position.y - circle.radius + circle.velocity.y <= boundary.position.y + boundary.height + padding
+        && circle.position.x + circle.radius + circle.velocity.x >= boundary.position.x - padding
+        && circle.position.y + circle.radius + circle.velocity.y >= boundary.position.y - padding
+        && circle.position.x - circle.radius + circle.velocity.x <= boundary.position.x + boundary.height + padding
     ) {
         return true;
     }
@@ -68,7 +91,7 @@ function isGhostColliding(ghost, boundary) {
     if (ghost.position.y + ghost.velocity.y <= boundary.position.y + boundary.height
         && ghost.position.x + ghost.size + ghost.velocity.x >= boundary.position.x
         && ghost.position.y + ghost.size + ghost.velocity.y >= boundary.position.y
-        && ghost.position.x + ghost.velocity.x <= boundary.position.x + boundary.height    
+        && ghost.position.x + ghost.velocity.x <= boundary.position.x + boundary.height
     ) {
         return true;
     }
@@ -85,14 +108,14 @@ function animate() {
                 ...pacman,
                 velocity: {
                     x: 0,
-                    y: -5,
+                    y: -pacman.speed,
                 },
             };
             if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
                 pacman.velocity.y = 0;
                 break;
             } else {
-                pacman.velocity.y = -5;
+                pacman.velocity.y = -pacman.speed;
             }
         }
     }
@@ -101,7 +124,7 @@ function animate() {
             const pacmanWithPredictedVelocity = {
                 ...pacman,
                 velocity: {
-                    x: -5,
+                    x: -pacman.speed,
                     y: 0,
                 },
             };
@@ -109,7 +132,7 @@ function animate() {
                 pacman.velocity.x = 0;
                 break;
             } else {
-                pacman.velocity.x = -5;
+                pacman.velocity.x = -pacman.speed;
             }
         }
     }
@@ -119,14 +142,14 @@ function animate() {
                 ...pacman,
                 velocity: {
                     x: 0,
-                    y: 5,
+                    y: pacman.speed,
                 },
             };
             if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
                 pacman.velocity.y = 0;
                 break;
             } else {
-                pacman.velocity.y = 5;
+                pacman.velocity.y = pacman.speed;
             }
         }
     }
@@ -135,7 +158,7 @@ function animate() {
             const pacmanWithPredictedVelocity = {
                 ...pacman,
                 velocity: {
-                    x: 5,
+                    x: pacman.speed,
                     y: 0,
                 },
             };
@@ -143,7 +166,7 @@ function animate() {
                 pacman.velocity.x = 0;
                 break;
             } else {
-                pacman.velocity.x = 5;
+                pacman.velocity.x = pacman.speed;
             }
         }
     }
@@ -178,22 +201,22 @@ function animate() {
             const ghostWithPredictedVelocityRight = {
                 ...ghost,
                 velocity: {
-                    x: 5,
+                    x: ghost.speed,
                     y: 0,
                 },
             };
-            if (isColliding(ghostWithPredictedVelocityRight, boundary)) {
+            if (isColliding(ghostWithPredictedVelocityRight, boundary) && !collisions.includes('right')) {
                 collisions.push('right');
             }
 
             const ghostWithPredictedVelocityLeft = {
                 ...ghost,
                 velocity: {
-                    x: -5,
+                    x: -ghost.speed,
                     y: 0,
                 },
             };
-            if (isColliding(ghostWithPredictedVelocityLeft, boundary)) {
+            if (isColliding(ghostWithPredictedVelocityLeft, boundary) && !collisions.includes('left')) {
                 collisions.push('left');
             }
 
@@ -201,10 +224,10 @@ function animate() {
                 ...ghost,
                 velocity: {
                     x: 0,
-                    y: -5,
+                    y: -ghost.speed,
                 },
             };
-            if (isColliding(ghostWithPredictedVelocityUp, boundary)) {
+            if (isColliding(ghostWithPredictedVelocityUp, boundary) && !collisions.includes('up')) {
                 collisions.push('up');
             }
 
@@ -212,13 +235,53 @@ function animate() {
                 ...ghost,
                 velocity: {
                     x: 0,
-                    y: 5,
+                    y: ghost.speed,
                 },
             };
-            if (isColliding(ghostWithPredictedVelocityDown, boundary)) {
+            if (isColliding(ghostWithPredictedVelocityDown, boundary) && !collisions.includes('down')) {
                 collisions.push('down');
             }
         });
+
+        if (collisions.length > ghost.previousCollisions.length) {
+            ghost.previousCollisions = collisions;
+        }
+
+        if (JSON.stringify(collisions) !== JSON.stringify(ghost.previousCollisions)) {
+            if (ghost.velocity.x > 0) {
+                ghost.previousCollisions.push('right');
+            }
+            else if (ghost.velocity.x < 0) {
+                ghost.previousCollisions.push('left');
+            }
+            else if (ghost.velocity.y > 0) {
+                ghost.previousCollisions.push('down');
+            }
+            else if (ghost.velocity.y < 0) {
+                ghost.previousCollisions.push('up');
+            }
+            const possibleDirections = ghost.previousCollisions.filter((collision) => !collisions.includes(collision));
+            const selectedDirection = possibleDirections[Math.floor(Math.random() * possibleDirections.length)];
+            switch(selectedDirection) {
+            case 'up':
+                ghost.velocity.x = 0;
+                ghost.velocity.y = -ghost.speed;
+                break;
+            case 'down':
+                ghost.velocity.x = 0;
+                ghost.velocity.y = ghost.speed;
+                break;
+            case 'left':
+                ghost.velocity.x = -ghost.speed;
+                ghost.velocity.y = 0;
+                break;
+            case 'right':
+                ghost.velocity.x = ghost.speed;
+                ghost.velocity.y = 0;
+                break;
+            }
+            ghost.previousCollisions = [];
+        }
     });
 }
 animate();

@@ -4,13 +4,16 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
 class Ghost {
+    static speed = 1;
     constructor({ position, velocity, color }) {
         this.position = position;
         this.velocity = velocity;
+        this.speed = 1;
         this.radius = 20;
         this.size = 40;
         this.image = new Image();
         this.image.src = `./images/bill-${color}.png`;
+        this.previousCollisions = [];
     }
 
     draw() {
