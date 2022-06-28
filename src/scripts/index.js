@@ -2,6 +2,7 @@ import css from '../index.css';
 import CONST from './CONST';
 import Boundary from './Boundary';
 import Pacman from './Pacman';
+import Ghost from './Ghost';
 import {boundaries, pellets} from './layout';
 
 const canvas = document.getElementById('canvas');
@@ -11,7 +12,6 @@ const scoreElement = document.getElementById('score');
 canvas.width = 600;
 canvas.height = 700;
 
-let score = 0;
 const direction = {
     up: false,
     down: false,
@@ -19,6 +19,20 @@ const direction = {
     right: false,
 };
 
+const ghosts = [
+    new Ghost({
+        position: {
+            x: 0,
+            y: 0,
+        },
+        velocity: {
+            x: 0,
+            y: 0,
+        },
+    })
+];
+
+let score = 0;
 let lastDirection;
 
 const pacman = new Pacman({
@@ -139,8 +153,9 @@ function animate() {
 
     pacman.update();
 
-    // pacman.velocity.x = 0;
-    // pacman.velocity.y = 0;
+    ghosts.forEach(ghost => {
+        ghost.update();
+    });
     
 }
 animate();
