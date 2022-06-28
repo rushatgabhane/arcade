@@ -1,16 +1,15 @@
 import CONST from './CONST';
-import bill from '../../images/bill.png';
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
 class Ghost {
-    constructor({ position, velocity }) {
+    constructor({ position, velocity, color }) {
         this.position = position;
         this.velocity = velocity;
         this.size = 40;
         this.image = new Image();
-        this.image.src = './images/bill.png';
+        this.image.src = `./images/bill-${color}.png`;
     }
 
     draw() {

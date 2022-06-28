@@ -5,6 +5,12 @@ import Pacman from './Pacman';
 import Ghost from './Ghost';
 import {boundaries, pellets} from './layout';
 
+function importAll(r) {
+    return r.keys().map(r);
+}
+
+importAll(require.context('../../images/', false, /\.(png|jpe?g|svg)$/));
+
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
@@ -22,13 +28,14 @@ const direction = {
 const ghosts = [
     new Ghost({
         position: {
-            x: 0,
-            y: 0,
+            x: Boundary.width + 6 * Boundary.width,
+            y: Boundary.height,
         },
         velocity: {
             x: 0,
             y: 0,
         },
+        color: 'pink',
     })
 ];
 

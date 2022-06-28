@@ -2,12 +2,6 @@ import CONST from './CONST';
 import Boundary from './Boundary';
 import Pellet from './Pellet';
 
-function importAll(r) {
-    return r.keys().map(r);
-}
-  
-const images = importAll(require.context('../../images/', false, /\.(png|jpe?g|svg)$/));
-
 const map = [
     ['1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2'],
     ['|', ' ', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
