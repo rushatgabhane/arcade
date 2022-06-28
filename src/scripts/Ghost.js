@@ -7,13 +7,14 @@ class Ghost {
     constructor({ position, velocity, color }) {
         this.position = position;
         this.velocity = velocity;
+        this.radius = 20;
         this.size = 40;
         this.image = new Image();
         this.image.src = `./images/bill-${color}.png`;
     }
 
     draw() {
-        context.drawImage(this.image, this.position.x, this.position.y, this.size, this.size);
+        context.drawImage(this.image, this.position.x - 20, this.position.y - 20, this.size, this.size);
     }
 
     update() {

@@ -28,8 +28,8 @@ const direction = {
 const ghosts = [
     new Ghost({
         position: {
-            x: Boundary.width + 6 * Boundary.width,
-            y: Boundary.height,
+            x: Boundary.width + 13 * Boundary.width / 2,
+            y: Boundary.height + Boundary.height / 2,
         },
         velocity: {
             x: 0,
@@ -53,11 +53,22 @@ const pacman = new Pacman({
     },
 });
 
-function isColliding(pacman, boundary) {
-    if (pacman.position.y - pacman.radius + pacman.velocity.y <= boundary.position.y + boundary.height
-        && pacman.position.x + pacman.radius + pacman.velocity.x >= boundary.position.x
-        && pacman.position.y + pacman.radius + pacman.velocity.y >= boundary.position.y
-        && pacman.position.x - pacman.radius + pacman.velocity.x <= boundary.position.x + boundary.height
+function isColliding(circle, boundary) {
+    if (circle.position.y - circle.radius + circle.velocity.y <= boundary.position.y + boundary.height
+        && circle.position.x + circle.radius + circle.velocity.x >= boundary.position.x
+        && circle.position.y + circle.radius + circle.velocity.y >= boundary.position.y
+        && circle.position.x - circle.radius + circle.velocity.x <= boundary.position.x + boundary.height
+    ) {
+        return true;
+    }
+    return false;
+}
+
+function isGhostColliding(ghost, boundary) {
+    if (ghost.position.y + ghost.velocity.y <= boundary.position.y + boundary.height
+        && ghost.position.x + ghost.size + ghost.velocity.x >= boundary.position.x
+        && ghost.position.y + ghost.size + ghost.velocity.y >= boundary.position.y
+        && ghost.position.x + ghost.velocity.x <= boundary.position.x + boundary.height    
     ) {
         return true;
     }
@@ -164,15 +175,48 @@ function animate() {
         ghost.update();
         const collisions = [];
         boundaries.forEach((boundary) => {
-            const ghostWithPredictedVelocity = {
+            const ghostWithPredictedVelocityRight = {
+                ...ghost,
+                velocity: {
+                    x: 5,
+                    y: 0,
+                },
+            };
+            if (isColliding(ghostWithPredictedVelocityRight, boundary)) {
+                collisions.push('right');
+            }
+
+            const ghostWithPredictedVelocityLeft = {
+                ...ghost,
+                velocity: {
+                    x: -5,
+                    y: 0,
+                },
+            };
+            if (isColliding(ghostWithPredictedVelocityLeft, boundary)) {
+                collisions.push('left');
+            }
+
+            const ghostWithPredictedVelocityUp = {
+                ...ghost,
+                velocity: {
+                    x: 0,
+                    y: -5,
+                },
+            };
+            if (isColliding(ghostWithPredictedVelocityUp, boundary)) {
+                collisions.push('up');
+            }
+
+            const ghostWithPredictedVelocityDown = {
                 ...ghost,
                 velocity: {
                     x: 0,
                     y: 5,
                 },
             };
-            if (isColliding(ghostWithPredictedVelocity, boundary)) {
-
+            if (isColliding(ghostWithPredictedVelocityDown, boundary)) {
+                collisions.push('down');
             }
         });
     });
