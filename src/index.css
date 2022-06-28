@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* CSS Reset
 http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -50,4 +52,26 @@ table {
 
 body {
 	background-color: #000;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 32px;
+}
+
+.text {
+	color: #fffaf0;
+	padding: 10px;
+}
+
+.center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#canvas {
+	height: 80vh;
+}
+
+.container {
+	padding-top: 20px;
 }
