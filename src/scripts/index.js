@@ -3,7 +3,7 @@ import CONST from './CONST';
 import Boundary from './Boundary';
 import Pacman from './Pacman';
 import Ghost from './Ghost';
-import {boundaries, pellets} from './layout';
+import { boundaries, pellets } from './layout';
 
 function importAll(r) {
     return r.keys().map(r);
@@ -36,7 +36,7 @@ const ghosts = [
             y: 0,
         },
         color: 'pink',
-    })
+    }),
 ];
 
 let score = 0;
@@ -72,10 +72,10 @@ function animate() {
         for (let i = 0; i < boundaries.length; i++) {
             const pacmanWithPredictedVelocity = {
                 ...pacman,
-                velocity : {
+                velocity: {
                     x: 0,
                     y: -5,
-                }
+                },
             };
             if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
                 pacman.velocity.y = 0;
@@ -89,10 +89,10 @@ function animate() {
         for (let i = 0; i < boundaries.length; i++) {
             const pacmanWithPredictedVelocity = {
                 ...pacman,
-                velocity : {
+                velocity: {
                     x: -5,
                     y: 0,
-                }
+                },
             };
             if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
                 pacman.velocity.x = 0;
@@ -106,10 +106,10 @@ function animate() {
         for (let i = 0; i < boundaries.length; i++) {
             const pacmanWithPredictedVelocity = {
                 ...pacman,
-                velocity : {
+                velocity: {
                     x: 0,
                     y: 5,
-                }
+                },
             };
             if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
                 pacman.velocity.y = 0;
@@ -123,10 +123,10 @@ function animate() {
         for (let i = 0; i < boundaries.length; i++) {
             const pacmanWithPredictedVelocity = {
                 ...pacman,
-                velocity : {
+                velocity: {
                     x: 5,
                     y: 0,
-                }
+                },
             };
             if (isColliding(pacmanWithPredictedVelocity, boundaries[i])) {
                 pacman.velocity.x = 0;
@@ -149,21 +149,33 @@ function animate() {
         }
     }
 
-    boundaries.forEach(boundary => {
+    boundaries.forEach((boundary) => {
         boundary.draw();
 
         if (isColliding(pacman, boundary)) {
             pacman.velocity.x = 0;
             pacman.velocity.y = 0;
         }
-    })
+    });
 
     pacman.update();
 
-    ghosts.forEach(ghost => {
+    ghosts.forEach((ghost) => {
         ghost.update();
+        const collisions = [];
+        boundaries.forEach((boundary) => {
+            const ghostWithPredictedVelocity = {
+                ...ghost,
+                velocity: {
+                    x: 0,
+                    y: 5,
+                },
+            };
+            if (isColliding(ghostWithPredictedVelocity, boundary)) {
+
+            }
+        });
     });
-    
 }
 animate();
 

@@ -205,7 +205,7 @@ map.forEach((row, i) => {
                         x: j * Boundary.width,
                         y: i * Boundary.height,
                     },
-                image: createImage('./images/pipeConnectorLeft.png'),
+                    image: createImage('./images/pipeConnectorLeft.png'),
                 }),
             );
             break;
