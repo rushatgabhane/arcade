@@ -222,7 +222,6 @@ function animate() {
             ghost.isScared = true;
             setTimeout(() => {
                 ghost.isScared = false;
-                console.log('ghost no scrae')
             }, CONST.powerUpTime);
         }
 
@@ -234,7 +233,7 @@ function animate() {
                 score += 100;
                 scoreElement.innerHTML = score;
             } else {
-                endGame('Game over!');
+                cancelAnimationFrame(animateID);
             }
         }
 
