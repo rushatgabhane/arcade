@@ -2,7 +2,7 @@ import css from '../index.css';
 import CONST from './CONST';
 import Boundary from './Boundary';
 import Pacman from './Pacman';
-import {boundaries} from './layout';
+import {boundaries, pellets} from './layout';
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -114,7 +114,7 @@ function animate() {
         }
     }
 
-
+    pellets.forEach(pellet => pellet.draw())
     boundaries.forEach(boundary => {
         boundary.draw();
 

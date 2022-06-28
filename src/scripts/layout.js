@@ -1,5 +1,6 @@
 import CONST from './CONST';
 import Boundary from './Boundary';
+import Pellet from './Pellet';
 
 function importAll(r) {
     return r.keys().map(r);
@@ -214,16 +215,16 @@ map.forEach((row, i) => {
                 }),
             );
             break;
-        // case '.':
-        //     pellets.push(
-        //         new Pellet({
-        //             position: {
-        //                 x: j * Boundary.width + Boundary.width / 2,
-        //                 y: i * Boundary.height + Boundary.height / 2,
-        //             },
-        //         }),
-        //     );
-        //     break;
+        case '.':
+            pellets.push(
+                new Pellet({
+                    position: {
+                        x: j * Boundary.width + Boundary.width / 2,
+                        y: i * Boundary.height + Boundary.height / 2,
+                    },
+                }),
+            );
+            break;
         }
     });
 });
