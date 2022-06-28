@@ -1,6 +1,7 @@
 import CONST from './CONST';
 import Boundary from './Boundary';
 import Pellet from './Pellet';
+import PowerUp from './PowerUp';
 
 const map = [
     ['1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2'],
@@ -20,6 +21,7 @@ const map = [
 
 const boundaries = [];
 const pellets = [];
+const powerUps = [];
 
 function createImage(src) {
     const image = new Image();
@@ -219,6 +221,16 @@ map.forEach((row, i) => {
                 }),
             );
             break;
+        case 'p':
+            powerUps.push(
+                new PowerUp({
+                    position: {
+                        x: j * Boundary.width + Boundary.width / 2,
+                        y: i * Boundary.height + Boundary.height / 2,
+                    },
+                }),
+            );
+            break;
         }
     });
 });
@@ -226,4 +238,5 @@ map.forEach((row, i) => {
 export {
     boundaries,
     pellets,
+    powerUps,
 };

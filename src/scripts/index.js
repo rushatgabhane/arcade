@@ -3,7 +3,7 @@ import CONST from './CONST';
 import Boundary from './Boundary';
 import Pacman from './Pacman';
 import Ghost from './Ghost';
-import { boundaries, pellets } from './layout';
+import { boundaries, pellets, powerUps } from './layout';
 
 function importAll(r) {
     return r.keys().map(r);
@@ -59,10 +59,22 @@ const ghosts = [
         },
         color: 'tangerine',
     }),
+    new Ghost({
+        position: {
+            x: Boundary.width + 5 * Boundary.width / 2,
+            y: 11 * Boundary.height + Boundary.height / 2,
+        },
+        velocity: {
+            x: Ghost.speed,
+            y: 0,
+        },
+        color: 'ice',
+    }),
 ];
 
 let score = 0;
 let lastDirection;
+let isPowerUpActive = false;
 
 const pacman = new Pacman({
     position: {
@@ -98,8 +110,10 @@ function isGhostColliding(ghost, boundary) {
     return false;
 }
 
+let animateID;
+
 function animate() {
-    requestAnimationFrame(animate);
+    animateID = requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     if (direction.up && lastDirection === 'up') {
@@ -171,6 +185,10 @@ function animate() {
         }
     }
 
+    if (pellets.length === 0) {
+        endGame('Win');
+    }
+
     for (let i = pellets.length - 1; i >= 0; i--) {
         const pellet = pellets[i];
         pellet.draw();
@@ -183,6 +201,20 @@ function animate() {
         }
     }
 
+    powerUps.forEach((powerUp, i) => {
+        powerUp.draw();
+
+        if (Math.hypot(powerUp.position.x - pacman.position.x, powerUp.position.y - pacman.position.y)
+            < powerUp.radius + pacman.radius
+        ) {
+            powerUps.splice(i, 1);
+            isPowerUpActive = true;
+            setTimeout(() => {
+                isPowerUpActive = false;
+            }, 5000);
+        }
+    });
+
     boundaries.forEach((boundary) => {
         boundary.draw();
 
@@ -194,8 +226,21 @@ function animate() {
 
     pacman.update();
 
-    ghosts.forEach((ghost) => {
+    ghosts.forEach((ghost, i) => {
         ghost.update();
+
+        if (Math.hypot(ghost.position.x - pacman.position.x, ghost.position.y - pacman.position.y)
+            < ghost.radius + pacman.radius
+        ) {
+            if (isPowerUpActive) {
+                ghosts.splice(i, 1);
+                score += 100;
+                scoreElement.innerHTML = score;
+            } else {
+                cancelAnimationFrame(animateID);
+            }
+        }
+
         const collisions = [];
         boundaries.forEach((boundary) => {
             const ghostWithPredictedVelocityRight = {
