@@ -324,13 +324,13 @@ function animate() {
             ghost.previousCollisions = [];
         }
     });
-    if (direction.right) {
+    if (pacman.velocity.x > 0) {
         pacman.rotation = 0;
-    } else if (direction.left) {
+    } else if (pacman.velocity.x < 0) {
         pacman.rotation = Math.PI;
-    } else if (direction.down) {
+    } else if (pacman.velocity.y > 0) {
         pacman.rotation = Math.PI / 2; 
-    } else if (direction.up) {
+    } else if (pacman.velocity.y < 0) {
         pacman.rotation = Math.PI * 1.5;
     }
 }
