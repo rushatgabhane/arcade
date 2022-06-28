@@ -228,7 +228,7 @@ function animate() {
         if (Math.hypot(ghost.position.x - pacman.position.x, ghost.position.y - pacman.position.y)
             < ghost.radius + pacman.radius
         ) {
-            if (isPowerUpActive) {
+            if (ghost.isScared) {
                 ghosts.splice(i, 1);
                 score += 100;
                 scoreElement.innerHTML = score;
@@ -324,6 +324,15 @@ function animate() {
             ghost.previousCollisions = [];
         }
     });
+    if (direction.right) {
+        pacman.rotation = 0;
+    } else if (direction.left) {
+        pacman.rotation = Math.PI;
+    } else if (direction.down) {
+        pacman.rotation = Math.PI / 2; 
+    } else if (direction.up) {
+        pacman.rotation = Math.PI * 1.5;
+    }
 }
 animate();
 
